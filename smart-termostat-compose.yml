@@ -1,0 +1,23 @@
+version: "3.5"
+
+volumes:
+  smart-thermostat_data:
+    name: "smart-thermostat_data"
+
+services:
+  smart-thermostat:
+    image: smart-thermostat:latest
+    container_name: smart-thermostat
+    restart: 'unless-stopped'
+    ports:
+      - 5000:5000
+    volumes:
+      - smart-thermostat_data:/smart-thermostat/config
+    environment:
+      - DEBUG=${DEBUG}                  # Enable debug messages
+      - USER_NAME=${USER_NAME}          # MongoDB Username
+      - PASSWORD=${PASSWORD}            # MongoDB Password
+      - DB_NAME=${DB_NAME}              # Database name
+      - CLUSTER_URL=${CLUSTER_URL}      # "cluster0.xxxxxx.mongodb.net"
+      - THERMOSTAT_DATA_NAME=${THERMOSTAT_DATA_NAME}  # thermostat collection name
+      - SENSOR_DATA_NAME=${SENSOR_DATA_NAME}          # sensors data collection name
